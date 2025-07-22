@@ -43,10 +43,11 @@ public class StopwatchApp extends Application {
     private Timeline timeline;
     private int remainingSeconds;
     
-    private String ABOUT_TEXT = "about.txt";
+    private String ABOUT_TEXT = "/com/staticvoid/about.txt";
 
     @Override
     public void start(Stage primaryStage) {
+    	System.out.println(getClass().getResource("alarm.wav"));
         // Slider represents number of 30s increments: 1..120
         Slider slider = new Slider(MIN_STEP, MAX_STEP, DEFAULT_STEP);
         slider.setMajorTickUnit(MAJOR_TICK_UNIT);
@@ -68,7 +69,7 @@ public class StopwatchApp extends Application {
         stopButton.setVisible(true);
         
         MenuBar menuBar = new MenuBar();
-        Menu aboutMenu = new Menu("About");
+        Menu aboutMenu = new Menu("Information");
         MenuItem aboutItem = new MenuItem("About this app");
         aboutMenu.getItems().add(aboutItem);
         menuBar.getMenus().add(aboutMenu);
@@ -102,7 +103,7 @@ public class StopwatchApp extends Application {
        VBox.setVgrow(mainContent, Priority.ALWAYS);
 
         Scene scene = new Scene(root, SCENE_WIDTH, SCENE_HEIGHT);
-        scene.getStylesheets().add(getClass().getResource("stopwatch.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/com/staticvoid/stopwatch.css").toExternalForm());
         
         primaryStage.setScene(scene);
         primaryStage.setTitle("Stopwatch");
@@ -279,6 +280,7 @@ public class StopwatchApp extends Application {
     }
 
     public static void main(String[] args) {
+    
         launch(args);
     }
 }
