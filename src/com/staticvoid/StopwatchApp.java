@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.Scene;
@@ -63,6 +64,9 @@ public class StopwatchApp extends Application {
         Button resetButton = new Button("Reset");
         resetButton.setVisible(false);
         
+        Button stopButton = new Button("Stop");
+        stopButton.setVisible(true);
+        
         MenuBar menuBar = new MenuBar();
         Menu aboutMenu = new Menu("About");
         MenuItem aboutItem = new MenuItem("About this app");
@@ -85,8 +89,13 @@ public class StopwatchApp extends Application {
             alert.initOwner(primaryStage);
             alert.showAndWait();
         });
+        
+       HBox buttonBox = new HBox(10, startButton, stopButton, resetButton);
+       buttonBox.setMaxWidth(Double.MAX_VALUE);
+       buttonBox.setAlignment(Pos.CENTER);
 
-       VBox mainContent = new VBox(VBOX_SPACING, slider, timeLabel, startButton, resetButton);
+       VBox mainContent = new VBox(VBOX_SPACING, slider, timeLabel, buttonBox);
+     //  VBox mainContent = new VBox(VBOX_SPACING, slider, timeLabel, startButton, resetButton);
        VBox root = new VBox(menuBar, mainContent);
        mainContent.getStyleClass().add("root");
        
@@ -128,6 +137,21 @@ public class StopwatchApp extends Application {
             );
             timeline.setCycleCount(remainingSeconds);
             timeline.play();
+        });
+        
+        stopButton.setOnAction(e -> {
+        	// if the countdown is running, terminate it
+        	if(timeline != null) {
+        		timeline.stop();
+        	}
+        	
+        	slider.setDisable(false);
+        	startButton.setDisable(false);
+        	stopButton.setDisable(false);
+        	resetButton.setVisible(false);
+        	slider.setValue(DEFAULT_STEP);
+        	timeLabel.setText(formatTime(DEFAULT_STEP * 30));
+        	mainContent.getStyleClass().remove("flash-red"); // stop flashing
         });
 
         resetButton.setOnAction(e -> {
