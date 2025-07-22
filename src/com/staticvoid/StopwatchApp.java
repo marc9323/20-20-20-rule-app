@@ -83,8 +83,6 @@ public class StopwatchApp extends Application {
             textArea.setMaxHeight(Double.MAX_VALUE);
             alert.getDialogPane().setContent(textArea);
             alert.initOwner(primaryStage);
-//            alert.setContentText(loadAboutText(ABOUT_TEXT));
-//            alert.initOwner(primaryStage);
             alert.showAndWait();
         });
 
